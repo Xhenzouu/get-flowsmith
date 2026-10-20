@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import ReactFlow, {
-  Background, BackgroundVariant, Controls, Handle, Position, addEdge, useReactFlow,
+  Background, BackgroundVariant, Controls, Handle, Position, addEdge, useReactFlow, useStore,
   type Connection, type Edge, type Node, type NodeProps, type OnNodesChange, type OnEdgesChange,
 } from "reactflow";
 import "reactflow/dist/style.css";
@@ -18,6 +18,7 @@ function FlowNode({ id, data, selected }: NodeProps<Data>) {
   const k = getKind(data.kind);
   const Icon = k.icon;
   const openAdd = useContext(AddContext);
+  const hasOutgoing = useStore(useCallback((s: { edges: Edge[] }) => s.edges.some((e) => e.source === id), [id]));
   return (
     <div
       className={`relative min-w-44 cursor-pointer rounded-md border border-t-4 border-border bg-card px-4 py-3 text-foreground ${k.border} ${
@@ -31,14 +32,16 @@ function FlowNode({ id, data, selected }: NodeProps<Data>) {
       </div>
       {data.settings && <div className="mt-1 max-w-40 truncate font-mono text-[10px] text-muted-foreground">{data.settings}</div>}
       <Handle type="source" position={Position.Right} className="io-handle" />
-      <button
-        aria-label="Add next node"
-        title="Add next node"
-        onClick={(e) => { e.stopPropagation(); openAdd(id); }}
-        className="nodrag absolute -right-10 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-border bg-card text-muted-foreground hover:border-primary hover:text-primary"
-      >
-        <Plus className="h-3 w-3" strokeWidth={2.25} />
-      </button>
+      {!hasOutgoing && (
+        <button
+          aria-label="Add next node"
+          title="Add next node"
+          onClick={(e) => { e.stopPropagation(); openAdd(id); }}
+          className="nodrag absolute -right-10 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-border bg-card text-muted-foreground hover:border-primary hover:text-primary"
+        >
+          <Plus className="h-3 w-3" strokeWidth={2.25} />
+        </button>
+      )}
     </div>
   );
 }
