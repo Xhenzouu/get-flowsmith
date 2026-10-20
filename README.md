@@ -2,7 +2,7 @@
 
 An interactive, visual workflow builder inspired by n8n and Apple Shortcuts. Built with React Flow and client-side state simulation.
 
-**Live Demo:** [getflowsmith.lovable.app](https://getflowsmith.lovable.app)
+**Live Demo:** [getflowsmith.lovable.app](https://get-flowsmith.lovable.app)
 
 ## 🚀 Features
 
