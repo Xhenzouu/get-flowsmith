@@ -23,5 +23,5 @@ export const CATEGORIES: { title: string; kinds: Kind[] }[] = [
 
 const LEGACY: Record<string, Kind> = { trigger: "webhook" };
 export function getKind(kind: string): Def {
-  return KINDS[kind as Kind] ?? KINDS[LEGACY[kind]] ?? KINDS.action;
+  return KINDS[kind as Kind] ?? (LEGACY[kind] ? KINDS[LEGACY[kind]] : undefined) ?? KINDS.action;
 }
