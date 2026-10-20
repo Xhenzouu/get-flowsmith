@@ -17,7 +17,7 @@ function FlowNode({ data, selected }: NodeProps<Data>) {
         data.active ? `outline-4 outline-offset-2 ${k.outline}` : selected ? "outline outline-1 outline-muted-foreground" : ""
       }`}
     >
-      {data.kind !== "trigger" && <Handle type="target" position={Position.Left} />}
+      {!k.trigger && <Handle type="target" position={Position.Left} />}
       <div className="flex items-center gap-2 text-sm">
         <Icon className={`h-4 w-4 ${k.text}`} strokeWidth={1.75} />
         {k.label}
