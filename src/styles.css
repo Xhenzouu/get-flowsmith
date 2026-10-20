@@ -208,10 +208,8 @@
   --color-node-delay: var(--node-delay);
 }
 
-.react-flow__handle.add-handle {
-  width: 20px; height: 20px; right: -10px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--card); border: 1px solid var(--border); color: var(--muted-foreground);
-  border-radius: 9999px; cursor: pointer;
+.react-flow__handle.io-handle {
+  width: 12px; height: 12px;
+  background: var(--card); border: 2px solid var(--muted-foreground); border-radius: 9999px;
 }
-.react-flow__handle.add-handle:hover { border-color: var(--primary); color: var(--primary); }
+.react-flow__handle.io-handle:hover { border-color: var(--primary); background: var(--primary); }
