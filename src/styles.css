@@ -142,3 +142,50 @@
     color: var(--color-foreground);
   }
 }
+
+:root {
+  --background: oklch(0.205 0.003 67);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.268 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.268 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.797 0.134 211.5);
+  --primary-foreground: oklch(0.205 0.003 67);
+  --secondary: oklch(0.268 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.268 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.627 0.233 303.9);
+  --accent-foreground: oklch(0.98 0 0);
+  --border: oklch(0.31 0 0);
+  --input: oklch(0.31 0 0);
+  --ring: oklch(0.797 0.134 211.5);
+  --node-trigger: oklch(0.797 0.134 211.5);
+  --node-ai: oklch(0.627 0.233 303.9);
+  --node-condition: oklch(0.75 0.17 55);
+  --node-action: oklch(0.72 0.19 150);
+  --success: oklch(0.72 0.19 150);
+}
+
+@theme inline {
+  --color-node-trigger: var(--node-trigger);
+  --color-node-ai: var(--node-ai);
+  --color-node-condition: var(--node-condition);
+  --color-node-action: var(--node-action);
+  --color-success: var(--success);
+  --font-serif: Georgia, "Tiempos Headline", serif;
+  --font-sans: Inter, system-ui, sans-serif;
+}
+
+@layer base {
+  body { font-family: var(--font-sans); }
+  h1, h2, h3 { font-family: var(--font-serif); }
+}
+
+.react-flow__controls-button { background: var(--card); border-color: var(--border); fill: var(--foreground); }
+.react-flow__controls-button:hover { background: var(--border); }
+.react-flow__edge-path { stroke: var(--muted-foreground); }
+.react-flow__edge.selected .react-flow__edge-path { stroke: var(--primary); }
+.react-flow__handle { background: var(--foreground); border: 1px solid var(--border); width: 8px; height: 8px; }
+.react-flow__attribution { display: none; }
