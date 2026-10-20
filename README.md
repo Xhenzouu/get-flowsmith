@@ -1,26 +1,42 @@
-# Getflowsmith
+# Flowsmith — AI Workflow Builder
 
-Implement exactly the screenshot and nothing else
+An interactive, visual workflow builder inspired by n8n and Apple Shortcuts. Built with React Flow and client-side state simulation.
 
-This project was built with [Lovable](https://lovable.dev).
+**Live Demo:** [getflowsmith.lovable.app](https://getflowsmith.lovable.app)
 
-**Live app**: https://getflowsmith.lovable.app
+## 🚀 Features
 
-## Build with Lovable
+- **Visual Canvas:** Drag-and-drop nodes on a dark themed React Flow canvas.
+- **Click-to-Add UX:** Add nodes via a central "+" button (empty state) or via the dynamic "+" handle on the last node in a chain.
+- **Auto-Connect:** Selecting a node from the modal automatically spawns it to the right and connects the edge.
+- **Edge Hover Menu:** Hover over any connection line to insert a node mid-chain or delete the connection.
+- **Node Properties:** Click any node to open a settings modal to rename it and configure its specific payload.
+- **Execution Simulation:** Click "Run Workflow" to watch the nodes light up sequentially while a mock execution log slides up from the bottom.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/ae65e715-6f6a-45fc-b49c-f056351f5565).
+## 🛠️ Tech Stack
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **Canvas Engine:** React Flow
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
 
-## Development
+## 📦 Run Locally
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+1. Clone the repo:
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+   ```bash
+   git clone https://github.com/Xhenzouu/getflowsmith.git
+   cd getflowsmith
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
