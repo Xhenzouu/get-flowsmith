@@ -49,7 +49,7 @@ export function Canvas(props: {
   setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
   onNodesChange: OnNodesChange; onEdgesChange: OnEdgesChange;
 }) {
-  const { screenToFlowPosition } = useReactFlow();
+  const { screenToFlowPosition, fitView } = useReactFlow();
   const wrap = useRef<HTMLDivElement>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeSourceNodeId, setActiveSourceNodeId] = useState<string | null>(null);
@@ -77,6 +77,7 @@ export function Canvas(props: {
     }
     setModalOpen(false);
     setActiveSourceNodeId(null);
+    if (source) setTimeout(() => fitView({ duration: 300, padding: 0.3, maxZoom: 1 }), 50);
   };
 
   return (
