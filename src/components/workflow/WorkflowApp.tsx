@@ -11,7 +11,7 @@ import { KINDS, type Kind } from "./nodeTypes";
 type Data = { kind: Kind; active: boolean };
 
 const initialNodes: Node<Data>[] = [
-  { id: "1", type: "flow", position: { x: 0, y: 100 }, data: { kind: "trigger", active: false } },
+  { id: "1", type: "flow", position: { x: 0, y: 100 }, data: { kind: "webhook", active: false } },
   { id: "2", type: "flow", position: { x: 260, y: 100 }, data: { kind: "ai", active: false } },
   { id: "3", type: "flow", position: { x: 520, y: 100 }, data: { kind: "condition", active: false } },
   { id: "4", type: "flow", position: { x: 780, y: 100 }, data: { kind: "action", active: false } },
@@ -39,7 +39,7 @@ export default function WorkflowApp() {
     setLines([]);
     setLogOpen(true);
     setRunning(true);
-    const triggers = nodes.filter((n) => n.data.kind === "trigger");
+    const triggers = nodes.filter((n) => KINDS[n.data.kind].trigger);
     if (!triggers.length) {
       log("[Error] No Trigger node found. Add a Trigger to start the workflow.");
       toast.error("Run failed: no trigger node");

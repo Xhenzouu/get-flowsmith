@@ -189,3 +189,21 @@
 .react-flow__edge.selected .react-flow__edge-path { stroke: var(--primary); }
 .react-flow__handle { background: var(--foreground); border: 1px solid var(--border); width: 8px; height: 8px; }
 .react-flow__attribution { display: none; }
+
+:root {
+  --node-webhook: oklch(0.656 0.241 354.3);
+  --node-schedule: oklch(0.705 0.187 47.6);
+  --node-ai: oklch(0.627 0.233 303.9);
+  --node-database: oklch(0.623 0.188 259.8);
+  --node-email: oklch(0.795 0.162 86);
+  --node-delay: oklch(0.714 0.019 261.3);
+  --node-condition: oklch(0.723 0.192 149.6);
+  --node-action: oklch(0.715 0.126 215.2);
+}
+@theme inline {
+  --color-node-webhook: var(--node-webhook);
+  --color-node-schedule: var(--node-schedule);
+  --color-node-database: var(--node-database);
+  --color-node-email: var(--node-email);
+  --color-node-delay: var(--node-delay);
+}
