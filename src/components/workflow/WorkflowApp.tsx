@@ -3,7 +3,6 @@ import { ReactFlowProvider, useNodesState, useEdgesState, type Node, type Edge }
 import { Play, Trash2, Workflow } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
-import { Sidebar } from "./Sidebar";
 import { Canvas } from "./Canvas";
 import { ExecutionLog } from "./ExecutionLog";
 import { getKind, type Kind } from "./nodeTypes";
@@ -93,7 +92,6 @@ export default function WorkflowApp() {
           </div>
         </header>
         <div className="flex min-h-0 flex-1">
-          <Sidebar />
           <Canvas nodes={shown} edges={edges} setNodes={setNodes} setEdges={setEdges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} />
         </div>
         <ExecutionLog open={logOpen} lines={lines} onClose={() => setLogOpen(false)} />
