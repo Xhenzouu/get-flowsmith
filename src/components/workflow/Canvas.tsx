@@ -83,7 +83,10 @@ export function Canvas(props: {
     } else if (pickMode.type === "after") {
       const source = props.nodes.find((n) => n.id === pickMode.sourceId);
       if (source) {
-        setNodes((n) => n.concat(newNode({ x: source.position.x + GAP, y: source.position.y })));
+        const x = source.position.x + GAP;
+        let y = source.position.y;
+        while (props.nodes.some((n) => Math.abs(n.position.x - x) < 200 && Math.abs(n.position.y - y) < 80)) y += 110;
+        setNodes((n) => n.concat(newNode({ x, y })));
         setEdges((e) => addEdge({ id: `e-${source.id}-${newId}`, source: source.id, target: newId, animated: true }, e));
       }
     } else {

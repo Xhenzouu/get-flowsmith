@@ -183,8 +183,8 @@
   h1, h2, h3 { font-family: var(--font-serif); }
 }
 
-.react-flow__controls-button { background: var(--card); border-color: var(--border); fill: var(--foreground); }
-.react-flow__controls-button:hover { background: var(--border); }
+.react-flow .react-flow__controls-button { background: var(--card); border-color: var(--border); fill: var(--foreground); }
+.react-flow .react-flow__controls-button:hover { background: var(--border); }
 .react-flow__edge-path { stroke: var(--muted-foreground); }
 .react-flow__edge.selected .react-flow__edge-path { stroke: var(--primary); }
 .react-flow__handle { background: var(--foreground); border: 1px solid var(--border); width: 8px; height: 8px; }
@@ -213,3 +213,6 @@
   background: var(--card); border: 2px solid var(--muted-foreground); border-radius: 9999px;
 }
 .react-flow__handle.io-handle:hover { border-color: var(--primary); background: var(--primary); }
+
+.react-flow .react-flow__controls { box-shadow: none; border: 1px solid var(--border); }
+.react-flow .react-flow__controls-button svg { fill: var(--foreground); }
