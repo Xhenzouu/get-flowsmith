@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "./Sidebar";
 import { Canvas } from "./Canvas";
 import { ExecutionLog } from "./ExecutionLog";
-import { KINDS, type Kind } from "./nodeTypes";
+import { getKind, type Kind } from "./nodeTypes";
 
 type Data = { kind: Kind; active: boolean };
 
@@ -39,7 +39,7 @@ export default function WorkflowApp() {
     setLines([]);
     setLogOpen(true);
     setRunning(true);
-    const triggers = nodes.filter((n) => KINDS[n.data.kind].trigger);
+    const triggers = nodes.filter((n) => getKind(n.data.kind).trigger);
     if (!triggers.length) {
       log("[Error] No Trigger node found. Add a Trigger to start the workflow.");
       toast.error("Run failed: no trigger node");
@@ -55,7 +55,7 @@ export default function WorkflowApp() {
       const node = nodes.find((n) => n.id === nid);
       if (!node) continue;
       setActiveNodeId(nid);
-      log(KINDS[node.data.kind].log);
+      log(getKind(node.data.kind).log);
       await wait(1000);
       if (node.data.kind === "ai") log("[Success] AI node returned response");
       edges.filter((e) => e.source === nid).forEach((e) => queue.push(e.target));

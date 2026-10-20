@@ -20,3 +20,8 @@ export const CATEGORIES: { title: string; kinds: Kind[] }[] = [
   { title: "AI & Data", kinds: ["ai", "database"] },
   { title: "Actions", kinds: ["email", "delay", "condition", "action"] },
 ];
+
+const LEGACY: Record<string, Kind> = { trigger: "webhook" };
+export function getKind(kind: string): Def {
+  return KINDS[kind as Kind] ?? KINDS[LEGACY[kind]] ?? KINDS.action;
+}
