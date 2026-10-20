@@ -25,3 +25,16 @@ const LEGACY: Record<string, Kind> = { trigger: "webhook" };
 export function getKind(kind: string): Def {
   return KINDS[kind as Kind] ?? (LEGACY[kind] ? KINDS[LEGACY[kind]] : undefined) ?? KINDS.action;
 }
+
+export type NodeData = { kind: Kind; active: boolean; name?: string; settings?: string };
+
+export const SETTINGS_LABEL: Record<Kind, { label: string; placeholder: string }> = {
+  webhook: { label: "Webhook URL path", placeholder: "/hooks/new-order" },
+  schedule: { label: "Schedule (cron)", placeholder: "0 9 * * 1-5" },
+  ai: { label: "Prompt", placeholder: "Summarize the incoming message..." },
+  database: { label: "Query", placeholder: "UPDATE orders SET status = 'done'" },
+  email: { label: "Recipient", placeholder: "team@example.com" },
+  delay: { label: "Wait (seconds)", placeholder: "30" },
+  condition: { label: "Expression", placeholder: "payload.amount > 100" },
+  action: { label: "Message", placeholder: "Notify #ops channel" },
+};

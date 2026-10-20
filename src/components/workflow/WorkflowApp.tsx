@@ -5,9 +5,9 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { Canvas } from "./Canvas";
 import { ExecutionLog } from "./ExecutionLog";
-import { getKind, type Kind } from "./nodeTypes";
+import { getKind, type Kind, type NodeData } from "./nodeTypes";
 
-type Data = { kind: Kind; active: boolean };
+type Data = NodeData;
 
 const initialNodes: Node<Data>[] = [
   { id: "1", type: "flow", position: { x: 0, y: 100 }, data: { kind: "webhook", active: false } },
