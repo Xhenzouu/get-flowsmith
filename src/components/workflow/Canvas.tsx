@@ -1,16 +1,21 @@
-import { useCallback, useRef, type DragEvent } from "react";
+import { createContext, useCallback, useContext, useRef, useState } from "react";
 import ReactFlow, {
   Background, BackgroundVariant, Controls, Handle, Position, addEdge, useReactFlow,
   type Connection, type Edge, type Node, type NodeProps, type OnNodesChange, type OnEdgesChange,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import { Plus } from "lucide-react";
 import { getKind, type Kind } from "./nodeTypes";
+import { NodePicker } from "./NodePicker";
 
 type Data = { kind: Kind; active: boolean };
 
-function FlowNode({ data, selected }: NodeProps<Data>) {
+const AddContext = createContext<(sourceId: string) => void>(() => {});
+
+function FlowNode({ id, data, selected }: NodeProps<Data>) {
   const k = getKind(data.kind);
   const Icon = k.icon;
+  const openAdd = useContext(AddContext);
   return (
     <div
       className={`min-w-44 rounded-md border border-t-4 border-border bg-card px-4 py-3 text-foreground ${k.border} ${
@@ -22,13 +27,21 @@ function FlowNode({ data, selected }: NodeProps<Data>) {
         <Icon className={`h-4 w-4 ${k.text}`} strokeWidth={1.75} />
         {k.label}
       </div>
-      <Handle type="source" position={Position.Right} />
+      <Handle
+        type="source"
+        position={Position.Right}
+        className="add-handle"
+        onClick={(e) => { e.stopPropagation(); openAdd(id); }}
+        title="Add next node"
+      >
+        <Plus className="pointer-events-none h-3 w-3" strokeWidth={2.25} />
+      </Handle>
     </div>
   );
 }
 const nodeTypes = { flow: FlowNode };
 
-let id = 0;
+let seq = 0;
 
 export function Canvas(props: {
   nodes: Node<Data>[]; edges: Edge[];
@@ -38,26 +51,59 @@ export function Canvas(props: {
 }) {
   const { screenToFlowPosition } = useReactFlow();
   const wrap = useRef<HTMLDivElement>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeSourceNodeId, setActiveSourceNodeId] = useState<string | null>(null);
   const onConnect = useCallback((c: Connection) => props.setEdges((e) => addEdge({ ...c, animated: true }, e)), [props]);
 
-  const onDrop = (e: DragEvent) => {
-    e.preventDefault();
-    const kind = e.dataTransfer.getData("application/reactflow") as Kind;
-    if (!kind) return;
-    const position = screenToFlowPosition({ x: e.clientX, y: e.clientY });
-    props.setNodes((n) => n.concat({ id: `n${Date.now()}-${id++}`, type: "flow", position, data: { kind, active: false } }));
+  const openAdd = useCallback((sourceId: string | null) => {
+    setActiveSourceNodeId(sourceId);
+    setModalOpen(true);
+  }, []);
+
+  const pick = (kind: Kind) => {
+    const newId = `n${Date.now()}-${seq++}`;
+    const source = activeSourceNodeId ? props.nodes.find((n) => n.id === activeSourceNodeId) : undefined;
+    let position;
+    if (source) {
+      position = { x: source.position.x + 300, y: source.position.y };
+    } else {
+      const r = wrap.current!.getBoundingClientRect();
+      const c = screenToFlowPosition({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      position = { x: c.x - 88, y: c.y - 24 };
+    }
+    props.setNodes((n) => n.concat({ id: newId, type: "flow", position, data: { kind, active: false } }));
+    if (source && !getKind(kind).trigger) {
+      props.setEdges((e) => addEdge({ id: `e-${source.id}-${newId}`, source: source.id, target: newId, animated: true }, e));
+    }
+    setModalOpen(false);
+    setActiveSourceNodeId(null);
   };
 
   return (
-    <div ref={wrap} className="h-full flex-1" onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; }} onDrop={onDrop}>
-      <ReactFlow
-        nodes={props.nodes} edges={props.edges} nodeTypes={nodeTypes}
-        onNodesChange={props.onNodesChange} onEdgesChange={props.onEdgesChange} onConnect={onConnect}
-        deleteKeyCode={["Backspace", "Delete"]} fitView className="bg-background"
-      >
-        <Background variant={BackgroundVariant.Dots} color="#333" gap={20} size={1.5} />
-        <Controls showInteractive={false} />
-      </ReactFlow>
+    <div ref={wrap} className="relative h-full flex-1">
+      <AddContext.Provider value={openAdd}>
+        <ReactFlow
+          nodes={props.nodes} edges={props.edges} nodeTypes={nodeTypes}
+          onNodesChange={props.onNodesChange} onEdgesChange={props.onEdgesChange} onConnect={onConnect}
+          deleteKeyCode={["Backspace", "Delete"]} fitView className="bg-background"
+        >
+          <Background variant={BackgroundVariant.Dots} color="#333" gap={20} size={1.5} />
+          <Controls showInteractive={false} />
+        </ReactFlow>
+      </AddContext.Provider>
+      {props.nodes.length === 0 && (
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4">
+          <button
+            onClick={() => openAdd(null)}
+            aria-label="Add first node"
+            className="pointer-events-auto flex h-20 w-20 items-center justify-center rounded-full border border-border bg-card text-primary hover:border-primary"
+          >
+            <Plus className="h-9 w-9" strokeWidth={1.5} />
+          </button>
+          <p className="text-sm text-muted-foreground">Add your first step</p>
+        </div>
+      )}
+      <NodePicker open={modalOpen} onClose={() => setModalOpen(false)} onPick={pick} />
     </div>
   );
 }
