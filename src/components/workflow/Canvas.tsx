@@ -4,12 +4,12 @@ import ReactFlow, {
   type Connection, type Edge, type Node, type NodeProps, type OnNodesChange, type OnEdgesChange,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { KINDS, type Kind } from "./nodeTypes";
+import { getKind, type Kind } from "./nodeTypes";
 
 type Data = { kind: Kind; active: boolean };
 
 function FlowNode({ data, selected }: NodeProps<Data>) {
-  const k = KINDS[data.kind];
+  const k = getKind(data.kind);
   const Icon = k.icon;
   return (
     <div
