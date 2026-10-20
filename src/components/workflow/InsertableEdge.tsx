@@ -23,7 +23,7 @@ export function InsertableEdge(p: EdgeProps) {
         <div
           onMouseEnter={enter}
           onMouseLeave={leave}
-          style={{ transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)` }}
+          style={{ transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY - 26}px)` }}
           className={`nodrag nopan pointer-events-auto absolute flex gap-1 rounded-md border border-border bg-card p-1 transition-opacity duration-150 ${
             hover ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
