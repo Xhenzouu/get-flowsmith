@@ -17,7 +17,7 @@ export function InsertableEdge(p: EdgeProps) {
 
   return (
     <>
-      <BaseEdge id={p.id} path={path} markerEnd={p.markerEnd} style={p.style} />
+      <BaseEdge id={p.id} path={path} {...(p.markerEnd ? { markerEnd: p.markerEnd } : {})} {...(p.style ? { style: p.style } : {})} />
       <path d={path} fill="none" stroke="transparent" strokeWidth={24} onMouseEnter={enter} onMouseLeave={leave} />
       <EdgeLabelRenderer>
         <div

@@ -26,7 +26,7 @@ export function getKind(kind: string): Def {
   return KINDS[kind as Kind] ?? (LEGACY[kind] ? KINDS[LEGACY[kind]] : undefined) ?? KINDS.action;
 }
 
-export type NodeData = { kind: Kind; active: boolean; name?: string; settings?: string };
+export type NodeData = { kind: Kind; active: boolean; name?: string | undefined; settings?: string | undefined };
 
 export const SETTINGS_LABEL: Record<Kind, { label: string; placeholder: string }> = {
   webhook: { label: "Webhook URL path", placeholder: "/hooks/new-order" },
