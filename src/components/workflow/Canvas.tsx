@@ -77,7 +77,7 @@ export function Canvas(props: {
     }
     setModalOpen(false);
     setActiveSourceNodeId(null);
-    if (source) setTimeout(() => fitView({ duration: 300, padding: 0.3, maxZoom: 1 }), 50);
+    if (source) setTimeout(() => fitView({ duration: 300, padding: 0.3, maxZoom: 1 }), 200);
   };
 
   return (
